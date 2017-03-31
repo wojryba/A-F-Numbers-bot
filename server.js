@@ -15,16 +15,61 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
   let text = req.body.text;
-  console.log(text);
   if (text == "random") {
     request('http://numbersapi.com/random', function (error, response, body){
       console.log('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', body); // Print the HTML for the Google homepage.
       res.send(body);
     });
+  } else if (text == "random math") {
+    request('http://numbersapi.com/random/math', function (error, response, body){
+      console.log("error: ", error);
+      res.send(body);
+    });
+  } else if (text == "random trivia") {
+    request('http://numbersapi.com/random/trivia', function (error, response, body){
+      console.log("error: ", error);
+      res.send(body);
+    });
+  } else if (text == "random date") {
+    request('http://numbersapi.com/random/date', function (error, response, body){
+      console.log("error: ", error);
+      res.send(body);
+    });
+  } else if (text == "random year") {
+    request('http://numbersapi.com/random/year', function (error, response, body){
+      console.log("error: ", error);
+      res.send(body);
+    });
+  } else if (text.startsWith("random min:")) {
+    let numbers = text.match(/\d+/g).map(Number);
+    console.log(numbers);
+    const min = numbers[0];
+    const max = numbers[1];
+    const url = 'http://numbersapi.com/random?min=' + min + '&max=' + max;
+    if (min<max){
+      request(url, function (error, response, body){
+        console.log("error: ", error);
+        res.send(body);
+      });
+    } else {
+      res.send("first number must be smaller!!")
+    }
+  } else if (text == "help") {
+    const help = `You need to enter "/number" and word 'random' or a number of your choice.
+    This will give you fun fact about number of your choice, or about random number.
+    
+    Additionally, you can use optional words: “trivia”, “math”, “date” and "year" with both of them.
+    eg. "/number 42 trivia" or "/number random trivia"
+    1. math - gives mathematical fact about number,
+    2. trivia – gives not mathematical fact about number,
+    3. date - gives fan fact about date,
+    4. year - gives fan fact about year.
+
+    You can also limit the range of random numbers my entering:
+    "/number random min: [#] max: [#]"`;
+    res.send(help)
   } else {
-    res.send('Wrong command. Try: "/number random" for list of options');
+    res.send('Wrong command. Try: "/random help" for list of commands')
   }
 })
 
