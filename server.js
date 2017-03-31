@@ -16,31 +16,16 @@ app.get('/', function(req, res){
 app.post('/', function(req, res){
   let text = req.body.text;
   let arrText  = text.split(' '); // having arguments by space seperation
+  console.log(arrText);
   if (text == "random") {
     request('http://numbersapi.com/random', function (error, response, body){
       console.log('error:', error); // Print the error if one occurred
       res.send(body);
     });
-  } else if (text == "random math") {
-    request('http://numbersapi.com/random/math', function (error, response, body){
-      console.log("error: ", error);
+  } else if (text.startsWith("random ") && ["trivia", "date", "math", "year" ].includes(arrText[1])) { //optional words for random command
+    request('http://numbersapi.com/random/' + arrText[1], function (error, response, body){
       res.send(body);
-    });
-  } else if (text == "random trivia") {
-    request('http://numbersapi.com/random/trivia', function (error, response, body){
-      console.log("error: ", error);
-      res.send(body);
-    });
-  } else if (text == "random date") {
-    request('http://numbersapi.com/random/date', function (error, response, body){
-      console.log("error: ", error);
-      res.send(body);
-    });
-  } else if (text == "random year") {
-    request('http://numbersapi.com/random/year', function (error, response, body){
-      console.log("error: ", error);
-      res.send(body);
-    });
+    })
   } else if (text.startsWith("random min:")) {
     let numbers = text.match(/\d+/g).map(Number);
     console.log(numbers);
@@ -58,7 +43,7 @@ app.post('/', function(req, res){
   } else if (text == "help") {
     const help = `You need to enter "/number" and word 'random' or a number of your choice.
     This will give you fun fact about number of your choice, or about random number.
-    
+
     Additionally, you can use optional words: “trivia”, “math”, “date” and "year" with both of them.
     eg. "/number 42 trivia" or "/number random trivia"
     1. math - gives mathematical fact about number,
@@ -83,7 +68,7 @@ app.post('/', function(req, res){
             res.send(body);
         });
   }else{
-    res.send('Wrong command. Try: "/random help" for list of commands')
+    res.send('Wrong command. Try: "/number help" for list of commands')
   }
 })
 
