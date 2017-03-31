@@ -69,9 +69,10 @@ app.post('/', function(req, res){
     You can also limit the range of random numbers my entering:
     "/number random min: [#] max: [#]"`;
     res.send(help)
-  }else if (/\d\d*\/\d\d*/.test(arrText[0])) {
+  }else if (/\d\d*\/*\-*\.*\\*\_*\d\d*/.test(arrText[0])) {
     // if first arg has / seperator
-      request('http://numbersapi.com/'+arrText[0]+'/date', function (error, response, body){
+      let replacedStr = arrText[0].replace(/\/*\-*\.*\\*\_*/g, '/');
+      request('http://numbersapi.com/'+replacedStr+'/date', function (error, response, body){
         res.send(body);
     });
   }else if(["trivia", "date", "math", "year" ].includes(arrText[1])&&!isNaN(Number(arrText[0]))){
