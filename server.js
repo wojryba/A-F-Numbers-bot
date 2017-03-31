@@ -15,6 +15,7 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
   let text = req.body.text;
+  let arrText  = text.split(' '); // having arguments by space seperation
   if (text == "random") {
     request('http://numbersapi.com/random', function (error, response, body){
       console.log('error:', error); // Print the error if one occurred
@@ -68,7 +69,20 @@ app.post('/', function(req, res){
     You can also limit the range of random numbers my entering:
     "/number random min: [#] max: [#]"`;
     res.send(help)
-  } else {
+  }else if (/\d\d*\/\d\d*/.test(arrText[0])) {
+    // if first arg has / seperator
+      request('http://numbersapi.com/'+arrText[0]+'/date', function (error, response, body){
+        res.send(body);
+    });
+  }else if(["trivia", "date", "math", "year" ].includes(arrText[1])&&!isNaN(Number(arrText[0]))){
+        request('http://numbersapi.com/'+arrText[0]+'/'+arrText[1], function (error, response, body){
+            res.send(body);
+    });
+  }else if(!isNaN(Number(arrText[0]))){
+        request('http://numbersapi.com/'+arrText[0], function (error, response, body){
+            res.send(body);
+        });
+  }else{
     res.send('Wrong command. Try: "/random help" for list of commands')
   }
 })
