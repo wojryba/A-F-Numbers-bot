@@ -75,22 +75,45 @@ app.post('/', function(req, res){
     You can also limit the range of random numbers my entering:
     "/numbersbot random min: [#] max: [#]"`;
     res.send(help)
-  }else if (/\d\d*\/*\-*\.*\\*\_*\d\d*/.test(arrText[0])) {
+
+}else if (/\d\d*\D\s*\d*\d/gi.test(arrText[0])) {
     // if first arg has / seperator
-      let replacedStr = arrText[0].replace(/\/*\-*\.*\\*\_*/g, '/');
-      request('http://numbersapi.com/'+replacedStr+'/date', function (error, response, body){
-        res.send(body);
-    });
+      console.log(1)
+      let replacedStr = arrText[0].replace(/\D/gi, '/');
+      let strArr = replacedStr.split('/');
+      if(+strArr[0]>12||+strArr[1]>31||(+strArr[0]==2 && +strArr[1]>29)){
+          res.send(" Wrong date please check your month and day!")
+      }else{
+          request('http://numbersapi.com/'+replacedStr+'/date', function (error, response, body){
+            if(response.body=="Invalid url"){
+             res.send("please check your month and day ' right format is MM/DD' ")
+            }else{
+             res.send(body);
+            }
+        });
+      }
+  }else if(arrText.length == 3 && !isNaN(arrText[0]) && !isNaN(arrText[1]) && arrText[2]=='date'){
+        if(+arrText[0]>12||+arrText[1]>31||(+arrText[0]==2 && +arrText[1]>29)){
+            res.send("please check your month and day ' right format is MM/DD' ")
+        }else{
+          request('http://numbersapi.com/'+arrText[0]+'/'+arrText[1], function (error, response, body){            
+            res.send(body);
+        });
+        }
+            
+
   }else if(["trivia", "date", "math", "year" ].includes(arrText[1])&&!isNaN(Number(arrText[0]))){
+      console.log(2)
         request('http://numbersapi.com/'+arrText[0]+'/'+arrText[1], function (error, response, body){
             res.send(body);
     });
   }else if(!isNaN(Number(arrText[0]))){
+      console.log(3)
         request('http://numbersapi.com/'+arrText[0], function (error, response, body){
             res.send(body);
         });
   }else{
-    res.send('Wrong command. Try: "/number help" for list of commands')
+    res.send('Wrong command. Try: "/random help" for list of commands')
   }
 })
 
