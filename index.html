@@ -1,3 +1,87 @@
-<p>This is a slack button:</p>
 
-<a href="https://slack.com/oauth/authorize?&client_id=162681725895.162672158918&scope=incoming-webhook,commands"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>A&F Numbers Bot</title>
+    <style>
+        body {
+             font-family: sans-serif;
+             font-size: 17px;
+             font-weight: 2.5em;
+             color:black;
+             background: url(background.jpg) top center repeat-y lightslategrey;
+        }
+
+        img.icon {
+            height: 200px;
+            width: 200px;
+            border: 3px white solid;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        a.button{
+            width: 150px;
+        }
+        code{
+            background: black;
+            color: white;
+            padding-left: 2px;
+            padding-right: 2px;
+            font-size: 16px;
+        }
+
+        div.description{
+            width: 350px;
+            background:hsla(178, 32%, 97%, 0.95);
+            border: white solid 2px;
+            border-radius: 5px;
+            margin-top: 40px;
+            padding: 75px;
+        }
+        .button, .icon, .text, .description{
+            display: block;
+            margin: 0 auto;
+        }
+        h1,h3,h2,h4{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <img class="icon" src="icon.png" alt="Numbers Bot">
+    <a class="button" href="https://slack.com/oauth/authorize?&client_id=162681725895.162672158918&scope=incoming-webhook,commands">
+        <img class="text" alt="Add to Slack" height="40" width="139"
+        src="https://platform.slack-edge.com/img/add_to_slack.png" 
+        srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+    </a>
+    <div class="description">
+        <h2>WELCOME to A&F NUMBERS BOT</h2>
+        <div class="lead">
+            This is a slack bot for interesting facts about numbers.
+            This bot let you bring your metrics and dates to life.
+            <h4>Installation:</h4>Just click the button above and it is done :D
+        </div>
+        <h3>NUMBERS BOT APP USAGE:</h3>
+    You need to enter " <code>/numbersbot</code> " and word ' <code>random</code> ' or a number of your choice.
+    This will give you fun fact about number of your choice, or about random number.
+
+    Additionally, you can use optional words: “<code>triva</code>”, “<code>math</code>”, “<code>date</code>” and "<code>year</code>" with both of them.
+    eg. " <code>/numbersbot 42 trivia</code> " or " <code>/numbersbot random math</code> "
+    <ol>
+        <li><code>math</code> - gives mathematical fact about number</li>
+        <li><code>trivia</code> – gives not mathematical fact about number</li>
+        <li><code>date</code> - gives fan fact about date, date format is MM DD</li>
+        <li><code>year</code> - gives fan fact about year</li>
+    </ol>
+    You can also limit the range of random numbers my entering:
+    " <code>/numbersbot random min: [#] max: [#]</code> "
+    </div>
+
+    
+</body>
+</html>
