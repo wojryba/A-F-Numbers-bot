@@ -27,8 +27,17 @@ app.get('/slack', function(req, res){
       // You are done.
       // If you want to get team info, you need to get the token here
       let token = JSON.parse(body).access_token; // Auth token
-      res.send("App was added to your team");
-
+            // Get the team domain name to redirect to the team URL after auth
+      request.post('https://slack.com/api/team.info', {form: {token: token}}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          if(JSON.parse(body).error == 'missing_scope') {
+            res.send("App was added to your team");
+          } else {
+            let team = JSON.parse(body).team.domain;
+            res.redirect('https://' +team+ '.slack.com');
+          }
+        }
+      });
     }
   })
 })
