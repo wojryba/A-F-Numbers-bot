@@ -10,6 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/'));
 
 app.get('/', function(req, res){
   res.sendFile('./index.html', {root: __dirname});
@@ -105,11 +106,11 @@ app.post('/', function(req, res){
         if(+arrText[0]>12||+arrText[1]>31||(+arrText[0]==2 && +arrText[1]>29)){
             res.send("please check your month and day ' right format is MM/DD' ")
         }else{
-          request('http://numbersapi.com/'+arrText[0]+'/'+arrText[1], function (error, response, body){            
+          request('http://numbersapi.com/'+arrText[0]+'/'+arrText[1], function (error, response, body){
             res.send(body);
         });
         }
-            
+
 
   }else if(["trivia", "date", "math", "year" ].includes(arrText[1])&&!isNaN(Number(arrText[0]))){
       console.log(2)
